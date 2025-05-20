@@ -14,6 +14,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="student_details")
 public class Student {
+	@Override
+	public String toString() {
+		return "Student [studentId=" + studentId + ", studentName=" + studentName + ", studentCity=" + studentCity
+				+ "]";
+	}
+
 	@Id
 	@Column(name="student_id")
 	
@@ -21,6 +27,7 @@ public class Student {
 	
 	@Column(name="student_name")
 	private String studentName;
+	
 	
 	@Column(name="student_city")
 	private String studentCity;
