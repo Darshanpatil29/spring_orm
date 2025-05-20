@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           https://www.springframework.org/schema/context/spring-context.xsd">
+           
+   <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" name="dataSource"
+    	p:url="jdbc:mysql://localhost:3306/springjdbc" p:username="root" p:password="root123" p:driverClassName="com.mysql.cj.jdbc.Driver"/>
+    	
+   <bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" name="factory" 
+   		p:dataSource-ref="dataSource">
+   		<property name="hibernateProperties">
+   			<props>
+   				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+   				<prop key="hibernate.show_sql">true</prop>
+   				<prop key="hibernate.hbm2ddl.auto">update</prop>
+   			</props>
+   		</property>
+   		<property name="annotatedClasses">
+   			<list>
+   				<value>
+   					com.spring.orm.entities.Student
+   				</value>
+   			</list>
+   		</property>
+   	</bean>
+   
+   <bean class="org.springframework.orm.hibernate5.HibernateTemplate" name="hibernateTemplate"
+   		p:sessionFactory-ref="factory"/>
+   
+   <bean class="com.spring.orm.dao.StudentDaoImpl" name="studentDaoImpl" p:hibernateTemplate-ref="hibernateTemplate" />
+   
+</beans>
